@@ -1,0 +1,75 @@
+/* Estilo para el contenedor principal */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #007bff; /* Fondo oscuro */
+    color: #fff; /* Texto en color blanco */
+}
+
+/* Estilo para los campos de entrada (nombre, apellido) */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilo para el botón de agregar */
+#agregarContacto {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Verde claro */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para el botón de eliminar */
+#eliminarContacto {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para la lista de contactos */
+#listaContactos {
+    list-style: none;
+    padding: 0;
+}
+
+/* Estilo para cada elemento de la lista de contactos */
+#listaContactos li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #d4edda; /* Verde claro para los datos nuevos */
+    color: #155724; /* Texto oscuro para los datos nuevos */
+}
+
+/* Estilo para el ID del contacto */
+#listaContactos .contacto-id {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Estilo para el nombre y apellido del contacto */
+#listaContactos .contacto-nombre {
+    flex: 2;
+}
+
+/* Estilo para el botón de eliminar dentro de un contacto */
+#listaContactos .contacto-eliminar {
+    flex: 0.5;
+}

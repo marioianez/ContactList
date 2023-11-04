@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libreta de Contactos</title>
+     <!-- Agrega los enlaces a los archivos CSS de Bootstrap y DataTables -->
+    <link rel="stylesheet" href="styles/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/style.css"> <!-- Vincula tu archivo CSS aquí -->
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+    
+<div class="container mt-5">
+    <h1>Libreta de Contactos</h1>
+    
+    <!-- Formulario para agregar contactos -->
+    <form id="agregarContactoForm">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" required>
+        </div>
+        <button type="button" class="btn btn-primary" id="agregarContacto">Agregar Contacto</button>
+    </form>
+
+    <hr>
+
+    <table id="contactTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de contactos se agregarán dinámicamente aquí -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Agrega los enlaces a los archivos JavaScript de jQuery, DataTables y Bootstrap -->
+<script src="DataTables/jquery.min.js"></script>
+<script src="DataTables/jquery.dataTables.min.js"></script>
+<script src="bootstrap/bootstrap.min.js"></script>
+<script type="module" src="config.mjs"></script>
+<script type="module" src="IndexController.mjs"></script>
+<script>
+    
+    // Variables para el manejo de contactos
+    let contactos = [];
+    const endpoint = "https://egcdzdhmkg.execute-api.eu-west-3.amazonaws.com/dev";  // Reemplaza esto con la URL correcta de tu API
+    
+    // Función para actualizar la tabla de contactos
+    function actualizarTabla() {
+        const tbody = document.querySelector("#contactTable tbody");
+        tbody.innerHTML = "";
+
+        contactos.forEach((contacto) => {
+            const row = document.createElement("tr");
+            row.innerHTML = 
+            row.innerHTML = `
+            <td>${contacto.id}</td>
+            <td>${contacto.nombre}</td>
+            <td>${contacto.apellido}</td>
+            <td><button class="btn btn-danger" type="button" onclick="borrarContacto('${contacto.id}')">Borrar</button></td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    }
+
+    // Función para agregar un nuevo contacto
+    function agregarContacto() {
+        const nombre = document.getElementById("nombre").value;
+        const apellido = document.getElementById("apellido").value;
+
+        if (nombre && apellido) {
+            const nuevoContacto = {
+                id: `${nombre}-${apellido}`,
+                nombre: nombre,
+                apellido: apellido,
+            };
+
+            contactos.push(nuevoContacto);
+
+            // Limpiar los campos de entrada
+            document.getElementById("nombre").value = "";
+            document.getElementById("apellido").value = "";
+
+            // Aquí llamamos a callAPI para enviar el nuevo contacto a la API
+            callAPI('agregar', nombre, apellido, nuevoID);
+
+            // Actualizar la tabla de contactos
+            actualizarTabla();
+        } else {
+            alert("Por favor, completa los campos de nombre y apellido.");
+        }
+    }
+    
+    // Función para eliminar un contacto por ID
+    function borrarContacto(id) {
+        contactos = contactos.filter((contacto) => contacto.id !== id);
+        actualizarTabla();
+    }
+
+    // Agregar un controlador de eventos al formulario de agregar contacto
+    const agregarContactoForm = document.getElementById("agregarContactoForm");
+    agregarContactoForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        agregarContacto();
+    });
+</script>
+<div id="items"></div> <!-- Elemento para mostrar los items -->
+<div id="response"></div> <!-- Elemento para mostrar la respuesta -->
+<div id="tablaContactos"></div> <!-- Elemento para mostrar la tabla de contactos -->
+<div id="listaContactos"></div> <!-- Elemento para mostrar la lista de contactos -->
+</body>
+</body>
+</html>
